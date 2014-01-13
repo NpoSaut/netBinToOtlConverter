@@ -54,7 +54,8 @@ namespace RpsExtractor
             Console.WriteLine("Текстовый файл: {0}", InPath);
             Console.WriteLine("Бинарный файл:  {0}", OutPath);
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("Фильтр на дескриптор: {0:X4}");
+            if (TargetDescripter != -1)
+                Console.WriteLine("Фильтр на дескриптор: {0:X4}", TargetDescripter);
 
             Regex regex = new Regex(Pattern);
 
