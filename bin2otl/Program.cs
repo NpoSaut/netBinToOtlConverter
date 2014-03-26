@@ -20,13 +20,13 @@ namespace bin2otl
                 inputFileName = Console.ReadLine();
             }
 
-            string headerFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "header.bin");
-            string outputFilePath = Path.GetFileNameWithoutExtension(inputFileName) + ".otl";
+            //string outputFilePath = Path.GetFileNameWithoutExtension(inputFileName) + ".otl";
+            string outputFilePath = Path.Combine(Path.GetDirectoryName(inputFileName), "1.otl");
 
             using (
-                FileStream inputStream = new FileStream(inputFileName, FileMode.Open),
+                Stream inputStream = new FileStream(inputFileName, FileMode.Open),
                     outputStream = new FileStream(outputFilePath, FileMode.Create),
-                    headerStream = new FileStream(headerFilePath, FileMode.Open)
+                    headerStream = new MemoryStream(Properties.Resources.header)
                 )
             {
                 headerStream.CopyTo(outputStream);
