@@ -18,7 +18,7 @@ namespace dat2otl
                 inputFileName = Console.ReadLine();
             }
 
-            string outputFilePath = Path.GetFileNameWithoutExtension(inputFileName) + ".otl";
+            string outputFilePath = Path.Combine(Path.GetDirectoryName(inputFileName), Path.GetFileNameWithoutExtension(inputFileName) + ".otl");
 
             using (
                 FileStream inputStream = new FileStream(inputFileName, FileMode.Open),
