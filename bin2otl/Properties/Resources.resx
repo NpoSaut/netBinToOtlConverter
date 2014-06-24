@@ -121,4 +121,7 @@
   <data name="header" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\header.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="prom_header" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\prom_header.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>
