@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using dat2otl.Properties;
 
 namespace bin2otl
 {
@@ -22,7 +23,7 @@ namespace bin2otl
             using (
                 Stream inputStream = new FileStream(inputFileName, FileMode.Open),
                     outputStream = new FileStream(outputFilePath, FileMode.Create),
-                    headerStream = new MemoryStream(Properties.Resources.header)
+                    headerStream = new MemoryStream(Resources.header)
                 )
             {
                 headerStream.CopyTo(outputStream);
