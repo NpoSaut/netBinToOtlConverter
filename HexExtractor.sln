@@ -1,9 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RpsExtractor", "HexExtractor\RpsExtractor.csproj", "{127827C4-90AA-4050-867A-20C5FE4FBC75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bin2otl", "bin2otl\bin2otl.csproj", "{FA901BFD-221F-4117-88C9-B71AEED36917}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dat2otl", "bin2otl\dat2otl.csproj", "{FA901BFD-221F-4117-88C9-B71AEED36917}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

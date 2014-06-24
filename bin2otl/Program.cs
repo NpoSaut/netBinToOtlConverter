@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+using dat2otl.Properties;
 
-namespace bin2otl
+namespace dat2otl
 {
     class Program
     {
@@ -16,19 +14,18 @@ namespace bin2otl
             if (args.Length >= 1) inputFileName = args[0];
             else
             {
-                Console.WriteLine("Укажите путь к входному файлу");
+                Console.WriteLine(@"Укажите путь к входному файлу");
                 inputFileName = Console.ReadLine();
             }
 
-            string headerFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "header.bin");
             string outputFilePath = Path.GetFileNameWithoutExtension(inputFileName) + ".otl";
 
             using (
                 FileStream inputStream = new FileStream(inputFileName, FileMode.Open),
-                    outputStream = new FileStream(outputFilePath, FileMode.Create),
-                    headerStream = new FileStream(headerFilePath, FileMode.Open)
+                           outputStream = new FileStream(outputFilePath, FileMode.Create)
                 )
             {
+                var headerStream = new MemoryStream(Resources.header);
                 headerStream.CopyTo(outputStream);
                 inputStream.CopyTo(outputStream);
                 while (outputStream.Length < minimumFileLength) outputStream.WriteByte(0xff);
