@@ -11,7 +11,7 @@ namespace RpsExtractor
     {
         static void Main(string[] args)
         {
-            string Pattern = @"(?<descriptor>[0-9a-fA-F]{4})[\s:]+?((?<databyte>[0-9a-fA-F]{2})\s){1,8}";
+            string Pattern = @"(?<descriptor>[0-9a-fA-F]{4})[\s:]+?((?<databyte>[0-9a-fA-F]{2})\s*){1,8}";
             if (args.Length == 0)
             {
                 Console.WriteLine("Запустите программу со следующими параметрами:");
@@ -54,7 +54,8 @@ namespace RpsExtractor
             Console.WriteLine("Текстовый файл: {0}", InPath);
             Console.WriteLine("Бинарный файл:  {0}", OutPath);
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("Фильтр на дескриптор: {0:X4}");
+            if (TargetDescripter != -1)
+                Console.WriteLine("Фильтр на дескриптор: {0:X4}", TargetDescripter);
 
             Regex regex = new Regex(Pattern);
 
@@ -75,7 +76,8 @@ namespace RpsExtractor
                         var desc = Convert.ToUInt16(match.Groups["descriptor"].Value, 16);
                         if (TargetDescripter == -1 || desc == TargetDescripter)
                         {
-                            foreach (var bc in match.Groups["databyte"].Captures.OfType<Capture>())
+                            var c = match.Groups["databyte"].Captures.OfType<Capture>().ToList();
+                            foreach (var bc in c)
                             {
                                 byte b = Convert.ToByte(bc.Value, 16);
                                 OutStream.WriteByte(b);

@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using dat2otl.Properties;
 
-namespace dat2otl
+namespace bin2otl
 {
     class Program
     {
@@ -20,14 +20,14 @@ namespace dat2otl
                 inputFileName = Console.ReadLine();
             }
 
-            string outputFilePath = Path.Combine(Path.GetDirectoryName(inputFileName), Path.GetFileNameWithoutExtension(inputFileName) + ".otl");
+            string outputFilePath = Path.Combine(Path.GetDirectoryName(inputFileName), "1.otl");
 
             using (
-                FileStream inputStream = new FileStream(inputFileName, FileMode.Open),
-                           outputStream = new FileStream(outputFilePath, FileMode.Create)
+                Stream inputStream = new FileStream(inputFileName, FileMode.Open),
+                    outputStream = new FileStream(outputFilePath, FileMode.Create),
+                    headerStream = new MemoryStream(Properties.Resources.header)
                 )
             {
-                var headerStream = new MemoryStream(Resources.header);
                 headerStream.CopyTo(outputStream);
                 inputStream.CopyTo(outputStream);
                 while (outputStream.Length < minimumFileLength) outputStream.WriteByte(0xff);
