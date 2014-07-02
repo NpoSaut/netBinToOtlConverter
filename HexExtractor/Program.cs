@@ -12,7 +12,7 @@ namespace RpsExtractor
     {
         static void Main(string[] args)
         {
-            string Pattern = @"(?<descriptor>[0-9a-fA-F]{4})[\s:]+?((?<databyte>[0-9a-fA-F]{2})\s*){1,8}";
+            string Pattern = @"(?<descriptor>[0-9a-fA-F]{4})[\s:]+?((?<databyte>[0-9a-fA-F]{2})\s*){1,8}$";
             if (args.Length == 0)
             {
                 Console.WriteLine("Запустите программу со следующими параметрами:");
