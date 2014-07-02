@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -77,15 +78,29 @@ namespace RpsExtractor
                         if (TargetDescripter == -1 || desc == TargetDescripter)
                         {
                             var c = match.Groups["databyte"].Captures.OfType<Capture>().ToList();
+                            IList<byte> bs = new List<byte>();
                             foreach (var bc in c)
                             {
                                 byte b = Convert.ToByte(bc.Value, 16);
                                 OutStream.WriteByte(b);
+                                bs.Add(b);
                                 BytesCounter++;
                             }
                             Console.Write('.');
+                            Debug.WriteLine("{0}  --> descriptor: {1:X4}, data: {2}", line, desc, BitConverter.ToString(bs.ToArray()));
+                        }
+                        else
+                        {
+                            Debug.WriteLine("{0}  --X descriptor: {1:X4}, data: {2}", line, desc,
+                                            BitConverter.ToString(
+                                                match.Groups["databyte"].Captures.OfType<Capture>()
+                                                                        .ToList()
+                                                                        .Select(bc => Convert.ToByte(bc.Value, 16))
+                                                                        .ToArray()));
                         }
                     }
+                    else
+                        Debug.WriteLine("{0}  XXX", line);
                 }
                 while (OutStream.Position < 65 * 1024)
                     OutStream.WriteByte(0xff);
