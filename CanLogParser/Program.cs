@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using BlokFrames;
 using Communications.Can;
 
@@ -8,6 +9,9 @@ namespace CanLogParser
     {
         private static void Main(string[] args)
         {
+            string inputFileName = args.Length > 0 ? args[0] : "input.txt";
+            string outputFileName = Path.ChangeExtension(inputFileName, "log");
+
             FormatManager formatManager =
                 new FormatManager()
                     .AddFormatter<SautReadyA>(f => string.Format("Переключение САУТ: {0}", f.Track))
@@ -17,22 +21,28 @@ namespace CanLogParser
                         f => string.Format("{0} перегон; генератор: {1} ({2}); маршрут: {3}", f.SpanNumber, f.GeneratorNumber, f.GeneratorKind, f.RouteNumber));
 
             DateTime date = DateTime.MinValue;
-            ICanLogSource logSource = new TextCanLogSource("input.txt");
-            foreach (CanFrame frame in logSource.ReadFrames())
+            ICanLogSource logSource = new TextCanLogSource(inputFileName);
+            using (var tw = File.CreateText(outputFileName))
             {
-                try
+                foreach (CanFrame frame in logSource.ReadFrames())
                 {
-                    BlokFrame blokFrame = BlokFrame.GetBlokFrame(frame);
-                    if (blokFrame is IpdDate)
-                        date = ((IpdDate)blokFrame).Time;
-                    if (date != DateTime.MinValue)
+                    try
                     {
-                        string s = formatManager.FormatString(blokFrame);
-                        if (s != null)
-                            Console.WriteLine("{0:T}   {1}", date, s);
+                        BlokFrame blokFrame = BlokFrame.GetBlokFrame(frame);
+                        if (blokFrame is IpdDate)
+                            date = ((IpdDate)blokFrame).Time;
+                        if (date != DateTime.MinValue)
+                        {
+                            string s = formatManager.FormatString(blokFrame);
+                            if (s != null)
+                            {
+                                Console.WriteLine("{0:T}   {1}", date, s);
+                                tw.WriteLine("{0:T}   {1}", date, s);
+                            }
+                        }
                     }
+                    catch (ApplicationException) { }
                 }
-                catch (ApplicationException) { }
             }
             Console.ReadLine();
         }
