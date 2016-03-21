@@ -18,7 +18,9 @@ namespace CanLogParser
                     .AddFormatter<InputData>(f => f.Index == 1 ? string.Format("Запрос на переключение пути: {0}", GetTrackName(f.Data)) : null)
                     .AddFormatter<SysData>(f => f.Index == 1 ? string.Format("Подтверждение переключения пути: {0}", GetTrackName(f.Data)) : null)
                     .AddFormatter<SautPtkReady2A1>(
-                        f => string.Format("{0} перегон; генератор: {1} ({2}); маршрут: {3}", f.SpanNumber, f.GeneratorNumber, f.GeneratorKind, f.RouteNumber));
+                        f => string.Format("[Кабина 1] {0} перегон; генератор: {1} ({2}); маршрут: {3}", f.SpanNumber, f.GeneratorNumber, f.GeneratorKind, f.RouteNumber))
+                    .AddFormatter<SautPtkReady2A2>(
+                        f => string.Format("[Кабина 2] {0} перегон; генератор: {1} ({2}); маршрут: {3}", f.SpanNumber, f.GeneratorNumber, f.GeneratorKind, f.RouteNumber));
 
             DateTime date = DateTime.MinValue;
             ICanLogSource logSource = new TextCanLogSource(inputFileName);
