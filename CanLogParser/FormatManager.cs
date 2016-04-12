@@ -17,6 +17,8 @@ namespace CanLogParser
             return this;
         }
 
+        public FormatManager AddFormatter<TFrame>() where TFrame : BlokFrame { return AddFormatter<TFrame>(f => f.ToString()); }
+
         public string FormatString(BlokFrame Frame)
         {
             IFrameFormatter formatter;
